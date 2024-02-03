@@ -9,7 +9,7 @@ const participants: Participant[] = [
   { name: 'Yotam', week1: 0 },
 ];
 
-type TableCell = { data: string | number; cssClassName?: string };
+type TableCell = { data: string | number; textColor?: string };
 type TableRow = TableCell[];
 
 const headers = ['Participant', 'Week 1 Total', 'Daily Average', '+/- target'];
@@ -23,10 +23,10 @@ const rows: TableRow[] = participants.map((p) => {
     { data: p.week1 },
     { data: dailyAverageMin },
     {
-      cssClassName:
+      data: overUnder,
+      textColor:
         // Tailwind is insane and doesn't allow for dynamic styles...fix this later
         overUnderColor === 'red' ? 'text-red-600, dark:text-red-600' : 'text-green-600, dark:text-green-600',
-      data: overUnder,
     },
   ];
 });
@@ -54,7 +54,9 @@ export default function Home() {
                 {row.map((datum) => (
                   <td
                     key={datum.data}
-                    className={`border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400 ${datum.cssClassName}`}
+                    className={`border-b border-slate-100 dark:border-slate-700 p-4 pl-8 ${
+                      datum.textColor ?? 'text-slate-500 dark:text-slate-400'
+                    }`}
                   >
                     {datum.data}
                   </td>
