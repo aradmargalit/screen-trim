@@ -4,19 +4,31 @@ import { Participant } from '@/types/participant';
 const participants: Participant[] = [
   { name: 'Amber', week1: 0 },
   { name: 'Anya', week1: 0 },
-  { name: 'Arad', week1: 0 },
+  { name: 'Arad', week1: 99 },
   { name: 'Eshed', week1: 0 },
   { name: 'Yotam', week1: 0 },
 ];
 
-type TableRow = [string, number, number, number];
+type TableCell = { data: string | number; cssClassName?: string };
+type TableRow = TableCell[];
 
 const headers = ['Participant', 'Week 1 Total', 'Daily Average', '+/- target'];
 const rows: TableRow[] = participants.map((p) => {
   const dailyAverageMin = p.week1 / 4; // 4 days in first week of Feb
   const overUnder = dailyAverageMin - 60; // target 60 minutes per day
+  const overUnderColor = overUnder >= 1 ? 'red' : 'green';
 
-  return [p.name, p.week1, dailyAverageMin, overUnder];
+  return [
+    { data: p.name },
+    { data: p.week1 },
+    { data: dailyAverageMin },
+    {
+      cssClassName:
+        // Tailwind is insane and doesn't allow for dynamic styles...fix this later
+        overUnderColor === 'red' ? 'text-red-600, dark:text-red-600' : 'text-green-600, dark:text-green-600',
+      data: overUnder,
+    },
+  ];
 });
 
 export default function Home() {
@@ -38,13 +50,13 @@ export default function Home() {
           </thead>
           <tbody className="bg-white dark:bg-slate-800">
             {rows.map((row) => (
-              <tr key={row[0]}>
+              <tr key={row[0].data}>
                 {row.map((datum) => (
                   <td
-                    key={datum}
-                    className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"
+                    key={datum.data}
+                    className={`border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400 ${datum.cssClassName}`}
                   >
-                    {datum}
+                    {datum.data}
                   </td>
                 ))}
               </tr>
