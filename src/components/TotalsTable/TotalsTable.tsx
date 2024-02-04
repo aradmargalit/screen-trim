@@ -5,7 +5,7 @@ type TotalsTableProps = {
   totals: Awaited<ReturnType<typeof fetchTotals>>;
 };
 
-const headers = ['Participant', 'Week 1 Total', 'Daily Average', '+/- target'];
+const headers = ['Participant', 'Total Minutes Logged', 'Daily Average', '+/- target', 'Max remaining daily average'];
 
 export default function TotalsTable({ totals }: TotalsTableProps) {
   const rows = totalsToRows(totals);

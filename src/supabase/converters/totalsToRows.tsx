@@ -13,19 +13,33 @@ const daysSinceChallengeStart = Math.floor((Date.now() - Date.parse('2024-02-01'
 
 function totalToRow(total: Totals[number]): TableRow {
   const minutesLogged = total.minutes_logged?.minutes_logged ?? 0;
-  const dailyAverageMin = minutesLogged / daysSinceChallengeStart;
-  const overUnder = dailyAverageMin - 60; // target 60 minutes per day
+  const dailyAverage = minutesLogged / daysSinceChallengeStart;
+  const overUnder = dailyAverage - 60; // target 60 minutes per day
   const overUnderColor = overUnder >= 1 ? 'red' : 'green';
+  const maxRemainingDailyAverage = getMaxRemainingDailyAverage(minutesLogged, daysSinceChallengeStart);
 
   return [
     { data: total.name },
     { data: minutesLogged, renderFn: () => <NumberTransition end={minutesLogged} duration={10} /> },
-    { data: dailyAverageMin },
+    { data: dailyAverage },
     {
       data: overUnder,
       textColor:
         // Tailwind is insane and doesn't allow for dynamic styles...fix this later
         overUnderColor === 'red' ? 'text-red-600, dark:text-red-600' : 'text-green-600, dark:text-green-600',
     },
+    {
+      data: maxRemainingDailyAverage,
+    },
   ];
+}
+
+function getMaxRemainingDailyAverage(minutesLogged: number, daysSinceChallengeStart: number): number {
+  const totalChallengeDays = 29;
+  const remainingChallengeDays = totalChallengeDays - daysSinceChallengeStart;
+
+  const targetFinalMinutes = 60 * totalChallengeDays;
+
+  const remainingMinutesBudget = targetFinalMinutes - minutesLogged;
+  return Math.floor(remainingMinutesBudget / remainingChallengeDays);
 }
