@@ -9,11 +9,11 @@ export function totalsToRows(totals: Totals): TableRow[] {
   return totals.map(totalToRow);
 }
 
+const daysSinceChallengeStart = Math.floor((Date.now() - Date.parse('2024-02-01')) / 86400000) + 1;
+
 function totalToRow(total: Totals[number]): TableRow {
-  // TODO expand logic to multi-week
-  const week1 = total.weekly_totals[0];
-  const minutesLogged = week1?.minutes_logged ?? 0;
-  const dailyAverageMin = minutesLogged / (week1?.weeks?.days_in_week ?? 1);
+  const minutesLogged = total.minutes_logged?.minutes_logged ?? 0;
+  const dailyAverageMin = minutesLogged / daysSinceChallengeStart;
   const overUnder = dailyAverageMin - 60; // target 60 minutes per day
   const overUnderColor = overUnder >= 1 ? 'red' : 'green';
 

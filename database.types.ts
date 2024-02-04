@@ -9,6 +9,35 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      minutes_logged: {
+        Row: {
+          created_at: string
+          id: number
+          minutes_logged: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          minutes_logged?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          minutes_logged?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "minutes_logged_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       users: {
         Row: {
           created_at: string
@@ -24,66 +53,6 @@ export interface Database {
           created_at?: string
           id?: string
           name?: string
-        }
-        Relationships: []
-      }
-      weekly_totals: {
-        Row: {
-          created_at: string
-          id: number
-          minutes_logged: number | null
-          user_id: string | null
-          week_id: number | null
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          minutes_logged?: number | null
-          user_id?: string | null
-          week_id?: number | null
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          minutes_logged?: number | null
-          user_id?: string | null
-          week_id?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "weekly_totals_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "weekly_totals_week_id_fkey"
-            columns: ["week_id"]
-            isOneToOne: false
-            referencedRelation: "weeks"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      weeks: {
-        Row: {
-          created_at: string
-          days_in_week: number | null
-          id: number
-          week_number: number | null
-        }
-        Insert: {
-          created_at?: string
-          days_in_week?: number | null
-          id?: number
-          week_number?: number | null
-        }
-        Update: {
-          created_at?: string
-          days_in_week?: number | null
-          id?: number
-          week_number?: number | null
         }
         Relationships: []
       }

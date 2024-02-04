@@ -8,10 +8,7 @@ export async function fetchTotals() {
 
   const { data, error } = await supabase.from('users').select(
     `
-    name
-    ,weekly_totals (minutes_logged, weeks
-       (week_number, days_in_week)
-      )
+    name, minutes_logged (minutes_logged)
     `
   );
 
