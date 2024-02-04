@@ -1,6 +1,9 @@
+import { ReactNode } from 'react';
+
+import NumberTransition from '@/components/NumberTransition';
 import { fetchTotals } from '@/supabase/fetchTotals';
 
-type TableCell = { data: string | number; textColor?: string };
+type TableCell = { data: string | number; textColor?: string; renderFn?: () => ReactNode };
 type TableRow = TableCell[];
 
 const headers = ['Participant', 'Week 1 Total', 'Daily Average', '+/- target'];
@@ -16,8 +19,8 @@ export default async function Home() {
     const overUnderColor = overUnder >= 1 ? 'red' : 'green';
 
     return [
-      { data: total.name! },
-      { data: minutesLogged },
+      { data: total.name },
+      { data: minutesLogged, renderFn: () => <NumberTransition end={minutesLogged} duration={10} /> },
       { data: dailyAverageMin },
       {
         data: overUnder,
@@ -54,7 +57,7 @@ export default async function Home() {
                       datum.textColor ?? 'text-slate-500 dark:text-slate-400'
                     }`}
                   >
-                    {datum.data}
+                    {datum.renderFn ? datum.renderFn() : datum.data}
                   </td>
                 ))}
               </tr>
