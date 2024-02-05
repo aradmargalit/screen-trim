@@ -30,9 +30,10 @@ function totalToRow(total: Totals[number]): TableRow {
       ),
     },
     { data: minutesLogged, renderFn: () => <NumberTransition end={minutesLogged} duration={5} /> },
-    { data: dailyAverage },
+    { data: dailyAverage, renderFn: () => dailyAverage.toFixed(2) },
     {
       data: overUnder,
+      renderFn: () => overUnder.toFixed(2),
       textColor:
         // Tailwind is insane and doesn't allow for dynamic styles...fix this later
         overUnderColor === 'red' ? 'text-red-600, dark:text-red-600' : 'text-green-600, dark:text-green-600',
