@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import NumberTransition from '@/components/NumberTransition';
 import { TableRow } from '@/types/tableTypes';
 
@@ -19,8 +21,15 @@ function totalToRow(total: Totals[number]): TableRow {
   const maxRemainingDailyAverage = getMaxRemainingDailyAverage(minutesLogged, daysSinceChallengeStart);
 
   return [
-    { data: total.name },
-    { data: minutesLogged, renderFn: () => <NumberTransition end={minutesLogged} duration={10} /> },
+    {
+      data: total.name,
+      renderFn: () => (
+        <Link href={`/${total.id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+          {total.name}
+        </Link>
+      ),
+    },
+    { data: minutesLogged, renderFn: () => <NumberTransition end={minutesLogged} duration={5} /> },
     { data: dailyAverage },
     {
       data: overUnder,
