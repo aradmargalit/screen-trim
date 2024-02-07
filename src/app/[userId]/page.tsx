@@ -40,7 +40,7 @@ export default async function Page({ params }: { params: { userId: string } }) {
   const minutesLogged = data.minutes_logged?.minutes_logged ?? 0;
   const lastUpdate = data.minutes_logged?.updated_at;
   const date = lastUpdate ? new Date(lastUpdate) : new Date();
-  const dateString = date.toLocaleString();
+  const dateString = date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
 
   return (
     <div>
