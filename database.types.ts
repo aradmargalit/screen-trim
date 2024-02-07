@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       minutes_logged: {
@@ -14,18 +14,21 @@ export interface Database {
           created_at: string
           id: number
           minutes_logged: number
+          updated_at: string | null
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: number
           minutes_logged?: number
+          updated_at?: string | null
           user_id: string
         }
         Update: {
           created_at?: string
           id?: number
           minutes_logged?: number
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: [

@@ -29,7 +29,10 @@ function totalToRow(total: Totals[number]): TableRow {
         </Link>
       ),
     },
-    { data: minutesLogged, renderFn: () => <NumberTransition end={minutesLogged} duration={5} /> },
+    {
+      data: minutesLogged,
+      renderFn: () => <NumberTransition end={minutesLogged} duration={5} />,
+    },
     { data: dailyAverage, renderFn: () => dailyAverage.toFixed(2) },
     {
       data: overUnder,
