@@ -3,6 +3,7 @@ import { notFound, redirect } from 'next/navigation';
 
 import { supabase } from '@/supabase/client';
 
+import LastUpdated from './LastUpdated';
 import UpdateMinutesLoggedInput from './UpdateMinutesLoggedInput';
 
 async function fetchUserDetail({ userId }: { userId: string }) {
@@ -39,8 +40,6 @@ export default async function Page({ params }: { params: { userId: string } }) {
 
   const minutesLogged = data.minutes_logged?.minutes_logged ?? 0;
   const lastUpdate = data.minutes_logged?.updated_at;
-  const date = lastUpdate ? new Date(lastUpdate) : new Date();
-  const dateString = date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
 
   return (
     <div>
@@ -48,7 +47,7 @@ export default async function Page({ params }: { params: { userId: string } }) {
       <h2>
         You have logged <strong>{minutesLogged}</strong> minutes in February
       </h2>
-      <h3>as of {dateString}</h3>
+      <LastUpdated lastUpdated={lastUpdate} />
       <UpdateMinutesLoggedInput startingValue={minutesLogged} onSubmit={updateMinutesLogged} />
     </div>
   );
