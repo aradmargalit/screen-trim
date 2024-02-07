@@ -3,7 +3,7 @@ import { supabase } from './client';
 export async function fetchTotals() {
   const { data, error } = await supabase.from('users').select(
     `
-    id, name, minutes_logged (minutes_logged)
+    id, name, minutes_logged (minutes_logged, updated_at)
     `
   );
 
