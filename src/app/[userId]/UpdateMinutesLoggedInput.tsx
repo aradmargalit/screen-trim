@@ -8,6 +8,7 @@ type UpdateMinutesLoggedInputProps = {
 
 export default function UpdateMinutesLoggedInput({ onSubmit, startingValue }: UpdateMinutesLoggedInputProps) {
   const [value, setValue] = useState(startingValue);
+  const [loading, setLoading] = useState(false);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const intValue = parseInt(e.target.value);
@@ -19,6 +20,15 @@ export default function UpdateMinutesLoggedInput({ onSubmit, startingValue }: Up
     }
   };
 
+  async function submitUpdate() {
+    setLoading(true);
+    try {
+      await onSubmit(value);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="flex justify-between content-center flex-col h-32">
       <input
@@ -29,8 +39,8 @@ export default function UpdateMinutesLoggedInput({ onSubmit, startingValue }: Up
         value={value}
       />
       <button
-        disabled={!(value > 0)}
-        onClick={() => onSubmit(value)}
+        disabled={!(value > 0) || loading}
+        onClick={submitUpdate}
         className="inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 disabled:bg-slate-500"
       >
         Update Minutes Logged
