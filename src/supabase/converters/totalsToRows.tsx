@@ -39,7 +39,7 @@ function totalToRow(total: Totals[number]): TableRow {
       renderFn: () => overUnder.toFixed(2),
       textColor:
         // Tailwind is insane and doesn't allow for dynamic styles...fix this later
-        overUnderColor === 'red' ? 'text-red-600, dark:text-red-600' : 'text-green-600, dark:text-green-600',
+        overUnderColor === 'red' ? 'text-red-600 dark:text-red-600' : 'text-green-600 dark:text-green-600',
     },
     {
       data: maxRemainingDailyAverage,

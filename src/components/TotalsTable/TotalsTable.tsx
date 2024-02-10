@@ -17,7 +17,7 @@ export default function TotalsTable({ totals }: TotalsTableProps) {
           {headers.map((header) => (
             <th
               key={header}
-              className="border-b dark:border-slate-600 font-medium p-2 pl-4 md:p-4 md:pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"
+              className="border-b dark:border-slate-600 font-medium p-2 pl-4 md:p-4 md:pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left"
             >
               {header}
             </th>
